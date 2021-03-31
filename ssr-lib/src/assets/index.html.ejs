@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>App</title>
+
+    <% if (typeof (styles) !== 'undefined') { %>
+        <%- styles %>
+    <% } %>
+</head>
+<body>
+<div id="app">
+    <% if (typeof (app) !== 'undefined') { %><%- app %>
+    <% } %>
+</div>
+
+<% if (typeof (scripts) !== 'undefined') { %>
+    <%- scripts %>
+<% } %>
+</body>
+</html>
