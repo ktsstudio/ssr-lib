@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const { run } = require('../build/index');
+const { run } = require('../build/src/index');
 
 run();

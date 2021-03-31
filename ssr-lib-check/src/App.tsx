@@ -1,15 +1,21 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 import * as React from "react";
-import loadable from "@loadable/component";
+import { Switch, Route } from "react-router-dom";
 
-export const OtherComponent = loadable(() => import("./Page"));
+import { routes } from "./routes";
 
-const App: React.FC = () => {
+export { routes } from "./routes";
+
+const App: React.FC = React.memo(() => {
   return (
-    <div>
-      <p>HELLO</p>
-      <OtherComponent />
-    </div>
+    <Switch>
+      {routes.map((route) => (
+        <Route key={route.path} {...route} />
+      ))}
+    </Switch>
   );
-};
+});
 
-export default React.memo(App);
+export default App;

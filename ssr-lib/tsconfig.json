@@ -6,6 +6,7 @@
     "allowJs": true,
     "outDir": "./build/",
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "noImplicitAny": true,
     "experimentalDecorators": true,

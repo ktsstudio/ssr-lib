@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>App</title>
-
-    <% if (typeof (styles) !== 'undefined') { %>
-        <%- styles %>
+    <% if (typeof (styles) !== "undefined") { %><%- styles; %>
     <% } %>
 </head>
 <body>
-<div id="app">
-    <% if (typeof (app) !== 'undefined') { %><%- app %>
-    <% } %>
-</div>
-
-<% if (typeof (scripts) !== 'undefined') { %>
-    <%- scripts %>
+<div id="app"><% if (typeof (app) !== "undefined") { %><%- app; %><% } %></div>
+<% if (typeof(context) !== 'undefined') { %>
+    <script id="__context__">
+      window.__CONTEXT__ = <%- context %>;
+      window.__INITIAL_LOAD__ = true;
+    </script>
+<% } %>
+<% if (typeof (scripts) !== "undefined") { %><%- scripts; %>
 <% } %>
 </body>
 </html>
