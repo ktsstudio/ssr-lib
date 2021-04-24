@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 type Props = {};
 
 const Main: React.FC<Props> = ({}: Props) => {
+  console.log("main");
+
   return (
     <div>
       <p>Main</p>

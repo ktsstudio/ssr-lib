@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "private": true,
-  "workspaces": ["ssr-lib", "ssr-lib-check"],
+  "workspaces": ["ssr-lib", "ssr-lib-check", "ssr-utils"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

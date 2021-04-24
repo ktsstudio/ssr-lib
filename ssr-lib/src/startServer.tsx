@@ -11,7 +11,8 @@ import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
 import { renderToString } from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
-import { matchPath, StaticRouter } from 'react-router-dom';
+import { StaticRouter } from 'react-router-dom';
+import { loadRoutesData } from '@kts/ssr-utils';
 
 import { WebpackBuildConfigOptionsType } from './webpack/types';
 import { DEFAULT_SERVER_CONFIG, ServerConfig } from './conf';
@@ -41,25 +42,14 @@ const runServer = (
 
     // load data
 
-    const promises: any[] = [];
-    routes.some((route: any) => {
-      const match = matchPath(req.path, route);
-
-      if (match && route.loadData) {
-        promises.push(route.loadData(match));
-      }
-
-      return match;
-    });
-
-    const data = await Promise.all(promises);
+    const routesData = await loadRoutesData(routes, req.path);
 
     // render
 
     const routerContext = {};
 
     const context = {
-      data,
+      routesData,
     };
 
     const view = (
