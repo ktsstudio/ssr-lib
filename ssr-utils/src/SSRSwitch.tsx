@@ -1,29 +1,32 @@
 import * as React from 'react';
-import { Route, Switch, SwitchProps, useLocation } from 'react-router';
+import { Route, Switch, SwitchProps } from 'react-router';
 import { RouteConfig } from 'react-router-config';
 
 import SSRRoute from './SSRRoute';
 
-type Props = { switchProps?: SwitchProps; routes?: RouteConfig[] };
+type Props = SwitchProps & { routes?: RouteConfig[] };
 
-const SSRSwitch: React.FC<Props> = ({ switchProps, routes }: Props) => {
+const SSRSwitch: React.FC<Props> = ({ routes, ...switchProps }: Props) => {
   if (!routes) {
-    return;
+    return null;
   }
 
   return (
     <Switch {...switchProps}>
-      {routes.map((route, i) => {
-        return (
-          <Route
-            key={route.key || i}
-            path={route.path}
-            exact={route.exact}
-            strict={route.strict}
-            render={(props) => <SSRRoute {...props} route={route} />}
-          />
-        );
-      })}
+      {routes.map((route, i) => (
+        <Route
+          key={route.key || i}
+          path={route.path}
+          exact={route.exact}
+          strict={route.strict}
+          render={(props) => (
+            <SSRRoute
+              {...props}
+              route={route}
+            />
+          )}
+        />
+      ))}
     </Switch>
   );
 };

@@ -7,7 +7,7 @@ type Props = { pageData: any };
 const About: React.FC<Props> = (props: Props) => {
   const { id } = useParams<{ id: string }>();
 
-  console.log("about", props.pageData);
+  console.log("about", id, props.pageData);
 
   return (
     <div>
@@ -18,6 +18,7 @@ const About: React.FC<Props> = (props: Props) => {
 };
 
 (About as any).loadData = async () => {
+  console.log("load about sub");
   const { data } = await axios.get("https://api.github.com/users/NapalmDeath");
 
   return data;

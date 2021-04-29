@@ -42,19 +42,22 @@ const runServer = (
 
     // load data
 
-    const routesData = await loadRoutesData(routes, req.path);
+    const appUserContext = App.createContext();
+
+    const pageData = await loadRoutesData(routes, req.path, appUserContext);
 
     // render
 
     const routerContext = {};
 
     const context = {
-      routesData,
+      pageData,
+      appContextSerialized: appUserContext.serialize(),
     };
 
     const view = (
       <StaticRouter location={req.url} context={routerContext}>
-        <App />
+        <App serverContext={context} appContext={appUserContext} />
       </StaticRouter>
     );
 

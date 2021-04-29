@@ -3,26 +3,35 @@ import { SwitchProps } from 'react-router';
 import { RouteConfig } from 'react-router-config';
 import { useEffect } from 'react';
 
-import PageDataProvider from './PageDataProvider';
 import SSRSwitch from './SSRSwitch';
 import PendingNavigation from './PendingNavigation';
+import { AppContextType, ServerContextType } from './AppContext';
 
 type Props = {
   switchProps?: SwitchProps;
   routes: RouteConfig[];
+  serverContext?: ServerContextType;
+  appContext: AppContextType;
 };
 
-const SSRApp: React.FC<Props> = ({ switchProps, routes }: Props) => {
+const SSRApp: React.FC<Props> = ({
+  switchProps,
+  routes,
+  serverContext,
+  appContext,
+}: Props) => {
   useEffect(() => {
     window.__INITIAL_LOAD__ = false;
   }, []);
 
   return (
-    <PageDataProvider>
-      <PendingNavigation routes={routes}>
-        <SSRSwitch switchProps={switchProps} routes={routes} />
-      </PendingNavigation>
-    </PageDataProvider>
+    <PendingNavigation
+      routes={routes}
+      serverContext={serverContext}
+      appContext={appContext}
+    >
+      <SSRSwitch {...switchProps} routes={routes} />
+    </PendingNavigation>
   );
 };
 

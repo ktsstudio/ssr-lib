@@ -10,7 +10,7 @@
 <div id="app"><% if (typeof (app) !== "undefined") { %><%- app; %><% } %></div>
 <% if (typeof(context) !== 'undefined') { %>
     <script id="__context__">
-      window.__CONTEXT__ = <%- context %>;
+      window.__SERVER_CONTEXT__ = <%- context %>;
       window.__INITIAL_LOAD__ = true;
     </script>
 <% } %>

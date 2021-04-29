@@ -1,10 +1,12 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 type Props = {};
 
 const Main: React.FC<Props> = ({}: Props) => {
-  console.log("main");
+  const location = useLocation();
+
+  console.log("main", location, useParams());
 
   return (
     <div>
