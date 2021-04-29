@@ -3,7 +3,6 @@ import { SwitchProps } from 'react-router';
 import { RouteConfig } from 'react-router-config';
 import { useEffect } from 'react';
 
-import SSRSwitch from './SSRSwitch';
 import PendingNavigation from './PendingNavigation';
 import { AppContextType, ServerContextType } from './AppContext';
 
@@ -12,13 +11,14 @@ type Props = {
   routes: RouteConfig[];
   serverContext?: ServerContextType;
   appContext: AppContextType;
+  children: React.ReactNode;
 };
 
 const SSRApp: React.FC<Props> = ({
-  switchProps,
   routes,
   serverContext,
   appContext,
+  children,
 }: Props) => {
   useEffect(() => {
     window.__INITIAL_LOAD__ = false;
@@ -30,7 +30,7 @@ const SSRApp: React.FC<Props> = ({
       serverContext={serverContext}
       appContext={appContext}
     >
-      <SSRSwitch {...switchProps} routes={routes} />
+      {children}
     </PendingNavigation>
   );
 };

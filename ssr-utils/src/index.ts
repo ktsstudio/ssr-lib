@@ -1,5 +1,5 @@
 import SSRApp from './SSRApp';
-import SSRSwitch from './SSRSwitch';
+import SSRRoute from './SSRRoute';
 import PendingNavigation from './PendingNavigation';
 import { loadRoutesData } from './loadData';
 import { ServerContextType, AppContextType } from './AppContext';
@@ -7,7 +7,7 @@ import { useAppContext } from './useAppContext';
 
 export {
   SSRApp,
-  SSRSwitch,
+  SSRRoute,
   PendingNavigation,
   loadRoutesData,
   ServerContextType,

@@ -16,11 +16,11 @@ export const usePageDataContext = (): PageDataContextType => {
   return value;
 };
 
-export const useAppContext = (): AppContextType => {
+export function useAppContext<T extends AppContextType>(): T {
   const value = useContext(AppContext);
   if (!value) {
     throw new Error('Use app data inside context!');
   }
 
-  return value;
-};
+  return value as T;
+}

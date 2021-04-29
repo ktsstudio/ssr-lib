@@ -1,17 +1,24 @@
 import * as React from 'react';
 import { RouteConfig } from 'react-router-config';
-import { RouteProps } from 'react-router';
+import { Route } from 'react-router';
 
 import { usePageDataContext } from './useAppContext';
 
-type Props = RouteProps & { route: RouteConfig };
+type Props = { route: RouteConfig; path: string };
 
-const SSRRoute: React.FC<Props> = ({ route, ...props }: Props) => {
+const SSRRoute: React.FC<Props> = ({ route, path }: Props) => {
   const pageData = usePageDataContext().pageData[route.path as string];
 
   const Component = route.component as any;
 
-  return <Component route={route} pageData={pageData} {...props} />;
+  return (
+    <Route
+      path={path}
+      exact={route.exact}
+      strict={route.strict}
+      render={(p) => <Component route={route} pageData={pageData} {...p} />}
+    />
+  );
 };
 
 export default React.memo(SSRRoute);

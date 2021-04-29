@@ -12,7 +12,7 @@ loadableReady(() => {
   const root = document.getElementById("app");
 
   const store = (App as any).createContext(
-    window.__SERVER_CONTEXT__.appContextSerialized
+    (window as any).__SERVER_CONTEXT__.appContextSerialized
   );
 
   hydrate(

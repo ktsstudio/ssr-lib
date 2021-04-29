@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 export interface AppContextType {
-  [k: string]: any;
   serialize(): Record<string, any>;
 }
 

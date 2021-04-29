@@ -24,7 +24,7 @@ TopBarProgress.config({
 
 type Props = {
   routes: RouteConfig[];
-  children: React.ReactElement;
+  children: React.ReactNode;
   serverContext?: ServerContextType;
   appContext: AppContextType;
 };

@@ -3,7 +3,13 @@ import "regenerator-runtime/runtime";
 
 import * as React from "react";
 import { RouteConfig } from "react-router-config";
-import { AppContextType, ServerContextType, SSRApp } from "@kts/ssr-utils";
+import { Switch } from "react-router-dom";
+import {
+  AppContextType,
+  ServerContextType,
+  SSRApp,
+  SSRRoute,
+} from "@kts/ssr-utils";
 import { enableStaticRendering } from "mobx-react";
 
 import { routes } from "./routes";
@@ -23,7 +29,17 @@ const App: React.FC<Props> = React.memo(
         routes={routes as RouteConfig[]}
         serverContext={serverContext}
         appContext={appContext}
-      />
+      >
+        <Switch>
+          {routes.map((route, i) => (
+            <SSRRoute
+              path={route.path as string}
+              route={route}
+              key={route.key || i}
+            />
+          ))}
+        </Switch>
+      </SSRApp>
     );
   }
 );
