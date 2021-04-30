@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext } from './utils/createContext';
 
 export interface AppContextType {
   serialize(): Record<string, any>;
@@ -11,25 +11,21 @@ export type PageDataContextType = {
   setPageData: (d: Record<string, any>) => void;
 };
 
-export const PageDataContext = React.createContext<PageDataContextType>({
-  pageData: {},
-  setPageData: () => {},
-});
+export const [
+  PageDataContext,
+  usePageDataContext,
+] = createContext<PageDataContextType>();
 
-export const AppContext = React.createContext<AppContextType>({
-  serialize: () => ({}),
-});
+export const [AppContext, useAppContext] = createContext<AppContextType>();
 
 export type ServerContextType = {
   appContextSerialized: Record<string, any>;
 } & Pick<PageDataContextType, 'pageData'>;
 
-const isServer = typeof window === 'undefined';
-
 export const getServerContext = (
   serverContext?: ServerContextType
 ): ServerContextType =>
-  isServer
+  typeof window === 'undefined'
     ? serverContext || {
         pageData: {},
       }

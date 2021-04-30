@@ -1,6 +1,6 @@
 import { matchRoutes, RouteConfig } from 'react-router-config';
 
-import { AppContextType, PageDataType } from './AppContext';
+import { AppContextType, PageDataType } from '../AppContext';
 
 export const loadRoutesData = async (
   routes: RouteConfig[],

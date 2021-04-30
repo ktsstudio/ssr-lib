@@ -1,41 +1,27 @@
-import * as React from 'react';
-import { Location } from 'history';
-import { useLocation, __RouterContext } from 'react-router';
+import {
+  __RouterContext,
+  RouteComponentProps,
+  useLocation,
+} from 'react-router';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { RouteConfig } from 'react-router-config';
-import TopBarProgress from 'react-topbar-progress-indicator';
+import { Location } from 'history';
 
-import { loadRoutesData } from './loadData';
 import {
-  AppContext,
   AppContextType,
   getServerContext,
-  PageDataContext,
+  PageDataContextType,
   ServerContextType,
-} from './AppContext';
+} from '../../AppContext';
+import { loadRoutesData } from '../../utils/loadData';
 
-TopBarProgress.config({
-  barColors: {
-    '0': '#f7fff5',
-    '1.0': '#8fff7c',
-  },
-  shadowBlur: 5,
-});
-
-type Props = {
-  routes: RouteConfig[];
-  children: React.ReactNode;
-  serverContext?: ServerContextType;
-  appContext: AppContextType;
-};
-
-const PendingNavigation: React.FC<Props> = ({
-  routes,
-  children,
-  serverContext,
-  appContext,
-}: Props) => {
+export const usePageLoader = (
+  routes: RouteConfig[],
+  appContext: AppContextType,
+  serverContext?: ServerContextType
+): [RouteComponentProps, PageDataContextType, boolean] => {
   const location = useLocation();
+
   const context = useContext(__RouterContext);
 
   const loadedContext = getServerContext(serverContext);
@@ -50,6 +36,7 @@ const PendingNavigation: React.FC<Props> = ({
 
   useEffect(() => {
     if (window.__INITIAL_LOAD__) {
+      window.__INITIAL_LOAD__ = false;
       return;
     }
 
@@ -59,7 +46,10 @@ const PendingNavigation: React.FC<Props> = ({
 
     loadRoutesData(routes, location.pathname, appContext, data).then(
       (loadedData) => {
-        setData(loadedData);
+        setData((s) => ({
+          ...s,
+          ...loadedData,
+        }));
         setIsLoading(false);
         setPrevLocation(null);
       }
@@ -84,16 +74,5 @@ const PendingNavigation: React.FC<Props> = ({
     [routeLocation]
   );
 
-  return (
-    <__RouterContext.Provider value={routerValue}>
-      <PageDataContext.Provider value={pageDataValue}>
-        <AppContext.Provider value={appContext}>
-          {isLoading && <TopBarProgress />}
-          {children}
-        </AppContext.Provider>
-      </PageDataContext.Provider>
-    </__RouterContext.Provider>
-  );
+  return [routerValue, pageDataValue, isLoading];
 };
-
-export default React.memo(PendingNavigation);

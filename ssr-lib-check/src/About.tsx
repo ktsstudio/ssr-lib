@@ -1,22 +1,27 @@
 import * as React from "react";
 import { Link, Switch, useParams } from "react-router-dom";
 import { RouteConfig } from "react-router-config";
-import { SSRRoute, useAppContext } from "@kts/ssr-utils";
+import { SSRRoute, useAppContext, SSRPage } from "@kts/ssr-utils";
 import { observer } from "mobx-react";
 import { Store } from "./store";
 
-type Props = { route: RouteConfig; pageData: any };
+type Props = { route: RouteConfig };
 
-const About: React.FC<Props> = ({ route, pageData }: Props) => {
-  console.log("about", useParams(), pageData);
+const About: SSRPage<Props, { about: string }> = ({
+  pageData: { about },
+  route,
+}) => {
+  console.log("about", useParams(), about);
 
-  const store = useAppContext<Store>();
+  const store = useAppContext() as Store;
 
   return (
     <div>
-      <p>About {store.test}</p>
+      <p>
+        About {store.test} {about}
+      </p>
       <br />
-      <button onClick={store.inc}>+1</button>
+      <button onClick={store.inc}>+ 1</button>
       <br />
       <Link to="/">Main</Link>
       <br />
@@ -36,9 +41,14 @@ const About: React.FC<Props> = ({ route, pageData }: Props) => {
   );
 };
 
-(About as any).loadData = async (match, ctx) => {
-  console.log("load about main", ctx);
-  return { about: "main" };
+About.loadData = async (match, ctx, pageData) => {
+  console.log("load about main", pageData);
+  if (pageData["/about"]) {
+    console.log("took from pageData");
+    return pageData["/about"];
+  }
+
+  return { about: "data from loadData" };
 };
 
 export default observer(About);

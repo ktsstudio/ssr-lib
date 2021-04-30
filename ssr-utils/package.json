@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
+  "types": "build/types",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lib:dev": "rimraf build && mkdir -p build && tsc --project tsconfig.json --watch"
+    "lib:dev": "rimraf build && mkdir -p build && webpack --mode=development --watch",
+    "lib:build": "rimraf build && mkdir -p build && webpack --mode=production"
   },
   "peerDependencies": {
     "react": "^17.0.1",
@@ -20,6 +22,8 @@
     "react-topbar-progress-indicator": "^4.1.0"
   },
   "devDependencies": {
-    "@types/react-router-config": "^5.0.2"
+    "@types/react-router-config": "^5.0.2",
+    "ts-loader": "^9.1.1",
+    "webpack": "^5.36.2"
   }
 }

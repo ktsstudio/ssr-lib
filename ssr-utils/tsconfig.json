@@ -5,6 +5,7 @@
     "strictPropertyInitialization": false,
     "declaration": true,
     "allowJs": true,
+    "declarationDir": "./build/types/",
     "outDir": "./build/",
     "skipLibCheck": true,
     "resolveJsonModule": true,
@@ -18,10 +19,7 @@
     "strict": true,
     "module": "commonjs",
     "target": "es5",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "jsx": "react"
   },
   "include": ["src/**/*"],

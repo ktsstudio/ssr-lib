@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteConfig } from 'react-router-config';
 import { Route } from 'react-router';
 
-import { usePageDataContext } from './useAppContext';
+import { usePageDataContext } from '../AppContext';
 
 type Props = { route: RouteConfig; path: string };
 
