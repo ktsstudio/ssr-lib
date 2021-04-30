@@ -4,7 +4,9 @@ import { match } from 'react-router';
 import { AppContextType, PageDataType } from './AppContext';
 
 export type SSRAppRoot<T> = React.ComponentType<T> & {
-  createContext: (initialData?: Record<string, any>) => AppContextType;
+  createContext: (
+    initialData?: Record<string, any>
+  ) => Promise<AppContextType> | AppContextType;
 };
 
 export type SSRPage<T, P = any> = React.ComponentType<T & { pageData: P }> & {

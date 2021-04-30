@@ -4,7 +4,6 @@ import "regenerator-runtime/runtime";
 import * as React from "react";
 import { RouteConfig } from "react-router-config";
 import { Switch } from "react-router-dom";
-import TopBarProgress from "react-topbar-progress-indicator";
 import {
   AppContextType,
   ServerContextType,
@@ -44,7 +43,7 @@ const App: SSRAppRoot<Props> = ({ serverContext, appContext }: Props) => {
   );
 };
 
-App.createContext = (initialData) => {
+App.createContext = async (initialData) => {
   if (typeof window === "undefined") {
     enableStaticRendering(true);
   }

@@ -42,7 +42,7 @@ const runServer = (
 
     // load data
 
-    const appUserContext = App.createContext();
+    const appUserContext = await App.createContext();
 
     const pageData = await loadRoutesData(routes, req.path, appUserContext);
 

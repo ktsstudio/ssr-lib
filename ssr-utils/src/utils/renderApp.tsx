@@ -6,10 +6,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { SSRAppRoot } from '../AppTypes';
 
 export const renderApp = (App: SSRAppRoot<any>, prepare?: () => void) => {
-  loadableReady(() => {
+  loadableReady(async () => {
     const root = document.getElementById('app');
 
-    const store = App.createContext(
+    const store = await App.createContext(
       (window as any).__SERVER_CONTEXT__.appContextSerialized
     );
 
