@@ -93,24 +93,18 @@ const createApp = () => {
 
 export async function startDevServer(
   options: WebpackBuildConfigOptionsType,
-  compiler: webpack.MultiCompiler,
+  compiler: webpack.Compiler,
   serverConfig: ServerConfig = DEFAULT_SERVER_CONFIG
 ) {
   const app = createApp();
 
-  const devServer = devMiddleware(compiler as webpack.MultiCompiler, {
+  const devServer = devMiddleware(compiler, {
     serverSideRender: true,
   });
 
   app.use(devServer);
 
-  app.use(
-    hotMiddleware(
-      (compiler as webpack.MultiCompiler).compilers.find(
-        (compiler) => compiler.name === 'client'
-      )
-    )
-  );
+  app.use(hotMiddleware(compiler));
 
   devServer.waitUntilValid(() => {
     runServer(app, options, serverConfig);

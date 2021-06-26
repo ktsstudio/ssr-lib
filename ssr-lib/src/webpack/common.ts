@@ -27,7 +27,7 @@ export const buildCommonConfig = ({
         options: {
           importLoaders: 2,
           modules: withModules
-            ? { localIdentName: '[name]__[local]__[hash:base64:5]' }
+            ? { localIdentName: '[name]__[local]__[contenthash:base64:5]' }
             : false,
         },
       },
@@ -96,7 +96,7 @@ export const buildCommonConfig = ({
           // exclude: /\.(component|c)\.svg$/,
           type: 'asset',
           generator: {
-            filename: 'static/img/[name].[hash].[ext]',
+            filename: 'static/img/[name].[contenthash].[ext]',
           },
           parser: {
             dataUrlCondition: {
@@ -124,7 +124,7 @@ export const buildCommonConfig = ({
                 limit: 8192,
                 publicPath: '/static/',
                 outputPath: 'static/',
-                name: 'img/[name].[hash].[ext]',
+                name: 'img/[name].[contenthash].[ext]',
               },
             },
           ],
@@ -133,7 +133,7 @@ export const buildCommonConfig = ({
           test: /\.(eot|woff2|woff|ttf?)$/,
           type: 'asset',
           generator: {
-            filename: 'static/fonts/[name].[hash].[ext]',
+            filename: 'static/fonts/[name].[contenthash].[ext]',
           },
         },
         {

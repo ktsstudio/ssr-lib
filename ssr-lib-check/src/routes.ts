@@ -1,8 +1,8 @@
 import loadable from "@loadable/component";
 import { RouteConfig } from "react-router-config";
 
-export const MainPage = loadable(() => import("./Main"));
-export const AboutPage = loadable(() => import("./About"));
+export const MainPage = loadable(() => import("./MainPage"));
+export const AboutPage = loadable(() => import("./AboutPage"));
 export const AboutIdPage = loadable(() => import("./AboutId"));
 
 export const routes: RouteConfig[] = [

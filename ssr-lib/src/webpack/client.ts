@@ -30,7 +30,7 @@ export const buildClientConfig = (options: WebpackBuildConfigOptionsType) => {
     output: {
       path: path.join(buildPath, 'client'),
       publicPath: '/',
-      filename: 'static/js/bundle.[hash].js',
+      filename: 'static/js/bundle.[contenthash].js',
     },
 
     plugins: [

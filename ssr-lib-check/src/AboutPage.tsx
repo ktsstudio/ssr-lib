@@ -7,7 +7,7 @@ import { Store } from "./store";
 
 type Props = { route: RouteConfig };
 
-const About: SSRPage<Props, { about: string }> = ({
+const AboutPage: SSRPage<Props, { about: string }> = ({
   pageData: { about },
   route,
 }) => {
@@ -41,7 +41,7 @@ const About: SSRPage<Props, { about: string }> = ({
   );
 };
 
-About.loadData = async (match, ctx, pageData) => {
+AboutPage.loadData = async (match, ctx, pageData) => {
   console.log("load about main", pageData);
   if (pageData["/about"]) {
     console.log("took from pageData");
@@ -51,4 +51,4 @@ About.loadData = async (match, ctx, pageData) => {
   return { about: "data from loadData" };
 };
 
-export default observer(About);
+export default observer(AboutPage);

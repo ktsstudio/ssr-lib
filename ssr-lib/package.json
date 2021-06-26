@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts-dev": "ts-node ./src/server/index.tsx",
     "lib:dev": "rimraf build && mkdir -p build/src && cp -r ./src/assets ./build/src/assets && tsc --project tsconfig.json --watch",
-    "lib:build": "rimraf build && cp -r ./src/assets ./build/src/assets && tsc --project tsconfig.json",
+    "lib:build": "rimraf build && mkdir -p build/src && cp -r ./src/assets ./build/src/assets && tsc --project tsconfig.json",
     "lib:run-bin": "node bin/ssr-server.js",
     "lib:build-run": "yarn build && yarn run-bin"
   },

@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 
 type Props = {};
 
-const Main: React.FC<Props> = ({}: Props) => {
+const MainPage: React.FC<Props> = ({}: Props) => {
   const location = useLocation();
 
   console.log("main", location, useParams());
@@ -16,4 +16,4 @@ const Main: React.FC<Props> = ({}: Props) => {
   );
 };
 
-export default React.memo(Main);
+export default React.memo(MainPage);

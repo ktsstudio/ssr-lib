@@ -7,9 +7,9 @@ export const run = async () => {
 
   parseCommand({
     startDevServer: async ({ port }) => {
-      const compilers = await buildDev(options);
+      const compiler = await buildDev(options);
 
-      await startDevServer(options, compilers, { port, host: '127.0.0.1' });
+      await startDevServer(options, compiler, { port, host: '127.0.0.1' });
     },
     buildProd: () => {
       buildProd(options);

@@ -10,25 +10,32 @@ import { buildClientConfig } from './webpack/client';
 import MultiStats = webpack.compilation.MultiStats;
 
 export const runCompiler = (
-  compiler: webpack.Compiler,
-  watch = false,
-  onSuccess: (s: MultiStats) => void = () => {}
+  compiler: webpack.Compiler | webpack.MultiCompiler,
+  onSuccess: (s: MultiStats) => void = () => {},
+  watch = false
 ) =>
   new Promise((resolve, reject) => {
     const cb = (err?: Error, stats?: MultiStats) => {
       if (stats) {
         onSuccess(compiler);
-        return resolve(stats);
-      }
 
-      return reject(err);
+        compiler.close((closeErr) => {
+          if (closeErr) {
+            return reject(closeErr);
+          }
+
+          resolve(stats);
+        });
+      } else {
+        reject(err);
+      }
     };
 
     if (watch) {
-      compiler.watch({}, cb);
-    } else {
-      compiler.run(cb);
+      return compiler.watch({}, cb);
     }
+
+    compiler.run(cb);
   });
 
 export function buildServer(
@@ -36,17 +43,13 @@ export function buildServer(
 ): Promise<any> {
   const compiler = webpack(<any>buildServerConfig(options));
 
-  return runCompiler(compiler, !options.isProduction, () => {
-    console.log(chalk.green('server built'));
-  });
-}
-
-export function buildClient(
-  options: WebpackBuildConfigOptionsType
-): Promise<any> {
-  const compiler = webpack(<any>buildClientConfig(options));
-
-  return runCompiler(compiler);
+  return runCompiler(
+    compiler,
+    () => {
+      console.log(chalk.green('server built'));
+    },
+    !options.isProduction
+  );
 }
 
 export async function buildDev(options: WebpackBuildConfigOptionsType) {
@@ -56,10 +59,9 @@ export async function buildDev(options: WebpackBuildConfigOptionsType) {
 
   await buildServer(options);
 
-  return webpack([
-    <any>buildClientConfig(options),
-    <any>buildServerConfig(options),
-  ]);
+  options.devServer = true;
+
+  return webpack(<any>buildClientConfig(options));
 }
 
 export async function buildProd(options: WebpackBuildConfigOptionsType) {
@@ -67,5 +69,10 @@ export async function buildProd(options: WebpackBuildConfigOptionsType) {
 
   options.isProduction = true;
 
-  return Promise.all([buildServer(options), buildClient(options)]);
+  return runCompiler(
+    webpack([<any>buildClientConfig(options), <any>buildServerConfig(options)]),
+    () => {
+      console.log(chalk.green('built'));
+    }
+  );
 }
