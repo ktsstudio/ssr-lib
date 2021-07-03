@@ -61,7 +61,7 @@ export async function buildDev(options: WebpackBuildConfigOptionsType) {
 
   options.devServer = true;
 
-  return webpack(<any>buildClientConfig(options));
+  return webpack(buildClientConfig(options));
 }
 
 export async function buildProd(options: WebpackBuildConfigOptionsType) {
@@ -70,7 +70,7 @@ export async function buildProd(options: WebpackBuildConfigOptionsType) {
   options.isProduction = true;
 
   return runCompiler(
-    webpack([<any>buildClientConfig(options), <any>buildServerConfig(options)]),
+    webpack([buildClientConfig(options), buildServerConfig(options)]),
     () => {
       console.log(chalk.green('built'));
     }
