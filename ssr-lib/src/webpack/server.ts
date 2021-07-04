@@ -19,7 +19,9 @@ export const buildServerConfig = (options: WebpackBuildConfigOptionsType) => {
     output: {
       path: path.join(buildPath, 'server'),
       filename: 'server.js',
-      libraryTarget: 'commonjs',
+      library: {
+        type: 'commonjs',
+      },
     },
     externals: [
       nodeExternals(),
